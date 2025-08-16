@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alen Kuriakose - MCA Student Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Animated background waves */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: wave-animation 8s ease-in-out infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation-delay: -2s;
+            opacity: 0.5;
+        }
+
+        .wave:nth-child(3) {
+            animation-delay: -4s;
+            opacity: 0.3;
+        }
+
+        @keyframes wave-animation {
+            0%, 100% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
+            25% { transform: translateX(-40%) translateY(-20px) rotate(1deg); }
+            50% { transform: translateX(-60%) translateY(-10px) rotate(-1deg); }
+            75% { transform: translateX(-45%) translateY(-15px) rotate(0.5deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            text-align: left;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 1;
+            transform: translateY(0);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .hero-text p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 1;
+            transform: translateY(0);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            opacity: 1;
+            transform: translateY(0);
+            font-weight: 600;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .hero-image img {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+            text-align: left;
+        }
+
+        .profile-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 6rem;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Skills Section */
+        .skills {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            background: white;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.1);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .project-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-card p {
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+            line-height: 1.6;
+        }
+
+        .project-links {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .project-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .tech-tags {
+            position: relative;
+            z-index: 2;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            position: relative;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .contact .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .submit-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .submit-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .social-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Status messages */
+        .status-message {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            animation: slideIn 0.3s ease;
+        }
+
+        .status-success {
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+
+        .status-error {
+            background: rgba(244, 67, 54, 0.9);
+            color: white;
+            border: 1px solid rgba(244, 67, 54, 0.5);
+        }
+
+        .status-info {
+            background: rgba(33, 150, 243, 0.9);
+            color: white;
+            border: 1px solid rgba(33, 150, 243, 0.5);
+        }
+
+        /* Floating elements */
+        .floating-element {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(odd) {
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .hero-text h1 { 
+                font-size: 2.5rem; 
+            }
+            
+            .hero-text p { 
+                font-size: 1.2rem; 
+            }
+            
+            .hero-image img {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .about-content { 
+                grid-template-columns: 1fr; 
+                text-align: center; 
+            }
+            
+            .section-title { 
+                font-size: 2rem; 
+            }
+            
+            nav ul { 
+                flex-direction: column; 
+                gap: 1rem; 
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-links {
+                flex-direction: column;
+            }
+        }
+
+        /* Scroll indicators */
+        .scroll-indicator {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+
+        .scroll-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.3);
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        /* Animation keyframes */
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="bg-animation">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Scroll indicators -->
+    <div class="scroll-indicator">
+        <div class="scroll-dot active" data-section="home"></div>
+        <div class="scroll-dot" data-section="about"></div>
+        <div class="scroll-dot" data-section="skills"></div>
+        <div class="scroll-dot" data-section="projects"></div>
+        <div class="scroll-dot" data-section="contact"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Alen Kuriakose</h1>
+                <p>Integrated MCA Student | Future Software Developer</p>
+                <a href="#about" class="cta-button">Discover My Journey</a>
+            </div>
+            <div class="hero-image">
+                <img src="alen-instapic.jpg" alt="Alen Kuriakose - Profile Picture">
+            </div>
+        </div>
+        <div class="floating-element" style="top: 20%; left: 10%; width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div class="floating-element" style="bottom: 20%; right: 15%; width: 30px; height: 30px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="profile-img">👨‍💻</div>
+                <div>
+                    <h2 class="section-title">About Me</h2>
+                    <p>I'm an aspiring entrepreneur and Integrated MCA student who sees opportunity in every challenge. Currently pursuing my Master's in Computer Applications, I'm not just learning to code—I'm learning to identify problems that technology can solve and transform them into life-changing product ideas.</p>
+                    <br>
+                    <p>My entrepreneurial journey recently reached a milestone when I was selected to the district level in YIP 6.0 (Young Innovator Programme), validating my approach to innovation and problem-solving. This achievement fuels my relentless curiosity to find "that one idea" that could reshape my future. Every problem I encounter becomes a potential product opportunity, every user frustration becomes a chance for innovation.</p>
+                    <br>
+                    <p>While I continue my search for that transformative idea, I'm building my technical arsenal with full-stack development skills, staying updated with emerging technologies, and networking with fellow innovators. I believe that when the right problem meets the right solution, magic happens—and I'm determined to be ready for that moment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h3>Frontend Development</h3>
+                    <p>HTML5, CSS3, JavaScript, React</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚙️</div>
+                    <h3>Backend Development</h3>
+                    <p>Node.js, Express.js, Python, PHP</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🗄️</div>
+                    <h3>Database Management</h3>
+                    <p>MySQL, MongoDB</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔧</div>
+                    <h3>Tools & Technologies</h3>
+                    <p>Git, VS Code, Postman, Selenium</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">💻</div>
+                    <h3>Programming Languages</h3>
+                    <p>Java, C, C++, Python, JavaScript</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🧪</div>
+                    <h3>Testing & Version Control</h3>
+                    <p>Selenium Testing, Git, GitHub</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Homely Bakes</h3>
+                    <p>A comprehensive platform bridging the gap between customers and homely bakers. This website allows homely bakers to signup and sell their products online while customers can enjoy the taste of home-made delicacies. Features include user authentication, product management, and order processing.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Alen-19/homely-bakes" target="_blank" class="project-link">📂 GitHub</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">Selenium</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h3>E-Commerce Platform</h3>
+                    <p>A full-stack e-commerce solution with complete backend implementation and database integration. Features include comprehensive product management, user authentication, shopping cart functionality, and order processing system.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Alen-19/ecommerce" target="_blank" class="project-link">📂 GitHub</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Express.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Postman</span>
+                        <span class="tech-tag">REST API</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Hotel Booking System</h3>
+                    <p>A comprehensive hotel booking backend system with complete database implementation. Features include room management, booking system, user management, and payment integration. Thoroughly tested using Postman for API reliability.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Alen-19/hotelbooking" target="_blank" class="project-link">📂 GitHub</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Express.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Postman</span>
+                        <span class="tech-tag">API Testing</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Interactive Todo List</h3>
+                    <p>A modern, responsive todo list application built with React. Users can add, edit, delete tasks, mark them as completed, and filter between active and completed tasks. Features a clean, intuitive interface with smooth animations.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Alen-19/todolist" target="_blank" class="project-link">📂 GitHub</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">Responsive Design</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Palindrome Checker</h3>
+                    <p>An elegant web application that allows users to check if any text or number is a palindrome. Features a clean, user-friendly interface with real-time validation and smooth animations for enhanced user experience.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Alen-19/Palindrome-checker" target="_blank" class="project-link">📂 GitHub</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">DOM Manipulation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-weight: 700; margin-bottom: 1rem;">Get In Touch</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">Let's connect and discuss opportunities, projects, or just have a chat about technology!</p>
+            
+            <div id="statusMessage"></div>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="userName" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="userEmail" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="subject" placeholder="Subject" required>
+                </div>
+                <div class="form-group">
+                    <textarea rows="5" id="message" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">📧 Send via Email</button>
+            </form>
+            
+            <div style="margin-top: 3rem;">
+                <p style="cursor: pointer;" title="Click to copy email" id="emailContact">📧 alenkuriakose2004@gmail.com | 📱 +91 8921169877</p>
+                <div class="social-links">
+                    <a href="https://github.com/Alen-19" target="_blank" class="social-link">
+                        <span style="font-size: 1.2rem;">🔗</span> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/alen-kuriakose-69060b260/" target="_blank" class="social-link">
+                        <span style="font-size: 1.2rem;">💼</span> LinkedIn
+                    </a>
+                    <a href="https://www.instagram.com/alenkuriakose_2004" target="_blank" class="social-link">
+                        <span style="font-size: 1.2rem;">📷</span> Instagram
+                    </a>
+                    <a href="https://wa.me/918921169877" target="_blank" class="social-link">
+                        <span style="font-size: 1.2rem;">💬</span> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Status message function
+        function showStatusMessage(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.innerHTML = `<div class="status-message status-${type}">${message}</div>`;
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                const msgElement = statusDiv.querySelector('.status-message');
+                if (msgElement) {
+                    msgElement.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => {
+                        statusDiv.innerHTML = '';
+                    }, 300);
+                }
+            }, 4000);
+        }
+
+        // Form submission with mailto method
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Opening Email...';
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('userName').value.trim(),
+                email: document.getElementById('userEmail').value.trim(),
+                subject: document.getElementById('subject').value.trim(),
+                message: document.getElementById('message').value.trim()
+            };
+            
+            // Validate form
+            if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                showStatusMessage('Please fill in all fields.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📧 Send via Email';
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                showStatusMessage('Please enter a valid email address.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📧 Send via Email';
+                return;
+            }
+            
+            // Create email body
+            const emailBody = `Hi Alen,
+
+My name is ${formData.name} and I'm reaching out from your portfolio website.
+
+${formData.message}
+
+Best regards,
+${formData.name}
+Email: ${formData.email}`;
+            
+            // Create mailto link
+            const mailtoLink = `mailto:alenkuriakose2004@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(emailBody)}`;
+            
+            try {
+                // Open email client
+                window.location.href = mailtoLink;
+                
+                showStatusMessage('✅ Email client opened successfully! Please send the message from your email app.', 'success');
+                
+                // Reset form after successful email opening
+                setTimeout(() => {
+                    document.getElementById('contactForm').reset();
+                }, 1000);
+                
+            } catch (error) {
+                showStatusMessage('❌ Could not open email client. Please try copying the email address and sending manually.', 'error');
+                console.error('Mailto error:', error);
+            }
+            
+            // Reset button state
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📧 Send via Email';
+            }, 2000);
+        });
+
+        // Email click-to-copy functionality
+        document.getElementById('emailContact').addEventListener('click', function() {
+            const email = 'alenkuriakose2004@gmail.com';
+            navigator.clipboard.writeText(email).then(function() {
+                showStatusMessage('📋 Email address copied to clipboard!', 'success');
+            }).catch(function(err) {
+                console.error('Could not copy email: ', err);
+                showStatusMessage('❌ Could not copy email address.', 'error');
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navigation background on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll indicator functionality
+        const scrollDots = document.querySelectorAll('.scroll-dot');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', function() {
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            scrollDots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('data-section') === currentSection) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll dot click functionality
+        scrollDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const targetSection = this.getAttribute('data-section');
+                const target = document.getElementById(targetSection);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe skill cards and project cards
+        document.querySelectorAll('.skill-card, .project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add smooth entrance animations for project cards
+        document.querySelectorAll('.project-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+        });
+
+        // Enhanced hover effects for project links
+        document.querySelectorAll('.project-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-2px) scale(1)';
+            });
+        });
+
+        // Initialize simple fade-in effects after page load
+        window.addEventListener('load', function() {
+            const heroElements = document.querySelectorAll('.hero-text h1, .hero-text p, .cta-button');
+            heroElements.forEach((element, index) => {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add parallax effect to floating elements
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.floating-element');
+            
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.2);
+                const yPos = -(scrolled * speed);
+                element.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
